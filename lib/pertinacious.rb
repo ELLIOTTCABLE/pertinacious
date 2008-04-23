@@ -1,8 +1,8 @@
 $LOAD_PATH.unshift(File.expand_path( File.dirname(__FILE__) )).uniq!
-
+require 'pertinacious/core_ext'
 require 'pertinacious/core'
 require 'pertinacious/base'
-require 'pertinacious/attribute'
+require 'pertinacious/accessor'
 
 # Welcome to Pertinacious!
 module Pertinacious
