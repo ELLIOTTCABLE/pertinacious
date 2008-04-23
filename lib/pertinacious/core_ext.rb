@@ -1,0 +1,8 @@
+require 'pertinacious/core_ext/kernel'
+require 'pertinacious/core_ext/object'
+require 'pertinacious/core_ext/string'
+require 'pertinacious/core_ext/symbol'
+require 'pertinacious/core_ext/enumerable'
+require 'pertinacious/core_ext/hash'
+require 'pertinacious/core_ext/fixnum'
+require 'pertinacious/core_ext/blank'
