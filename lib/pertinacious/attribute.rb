@@ -49,20 +49,25 @@ module Pertinacious
       
     end
   end
-  
-  # This is included, by Pertinacious, into pertinacious classes. Thus, 
-  # +attribute+ is available to all pertinacious classes. It takes a series of
-  # symbols as names of attributes, as well as an optional block the define
-  # the default value of the attributes.
+
   module Core
-    # def attribute *attributes, opts, &block # Some day, ruby 1.9, some day...
+    
+    # Creates a new attribute on your class, and makes it pertinacious.
+    # Available to all pertinacious classes. It takes a series of symbols as
+    # names of attributes, as well as an optional block the define the default
+    # value of the attributes.
+    # 
+    # @param [*Symbol] attributes one or more attribute names (as symbols)
+    # @param [&Proc] block accepts a block, which is called to generate the default value
     def attribute *attributes, &block
+      # def attribute *attributes, opts, &block # Some day, ruby 1.9, some day...
       opts = attributes.pop if attributes.last.is_a?(Hash)
       
       attributes.each do |attribute|
         ::Pertinacious::Attribute.new attribute, self, opts, &block
       end
     end
+    
   end
 end
 

@@ -7,6 +7,7 @@ require 'pertinacious/base'
 
 # Welcome to Pertinacious!
 module Pertinacious
+  # This version of Pertinacious.
   VERSION = 0
   
   # This is incase anybody uses +include Pertinacious+ instead of the

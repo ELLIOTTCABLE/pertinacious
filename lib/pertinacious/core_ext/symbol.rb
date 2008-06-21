@@ -1,3 +1,4 @@
+# Contains extensions to the +Symbol+ core class.
 class Symbol
   include File::Extension
   include File::Pathize

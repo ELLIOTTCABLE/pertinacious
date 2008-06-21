@@ -8,6 +8,8 @@ require 'yard'
 require 'spec/rake/spectask'
 require 'spec/rake/verify_rcov'
 
+require 'pp'
+
 # Runs specs, generates rcov, and opens rcov in your browser.
 namespace :rcov do
   Spec::Rake::SpecTask.new(:full) do |t|
@@ -43,6 +45,31 @@ namespace :yard do
   YARD::Rake::YardocTask.new :html do |t|
     t.files   = ['lib/**/*.rb']
     t.options = ['--readme', 'README.mkdn', '--output-dir', 'meta/documentation']
+  end
+  
+  task :ycov do
+    YARD::Registry.load
+    
+    items = YARD::Registry.all
+    num_items = items.size.to_f
+    uncovered_items = YARD::Registry.all.select {|x| x.docstring.empty? }
+    num_uncovered_items = uncovered_items.size.to_f
+    num_covered_items = num_items - num_uncovered_items
+    
+    items_coverage = (num_covered_items / num_items) * 100
+    items_coverage_string = items_coverage.to_s[/^(\d+.\d)/, 1]
+    
+    coverage_threshold = 95
+    
+    unless items_coverage > coverage_threshold
+      puts "Documentation threshold is #{coverage_threshold.to_s}%, but yours is only #{items_coverage_string}% (#{num_covered_items.to_i}/#{num_items.to_i})"
+      puts "Uncovered:"
+      uncovered_items.each do |uncovered|
+        puts " - #{uncovered.path} (#{uncovered.type})"
+      end
+      exit
+    end
+    puts "Documentation: #{items_coverage_string}% (threshold: #{coverage_threshold.to_s}%)"
   end
   
   task :open do
@@ -83,7 +110,7 @@ end
 
 desc 'Check everything over before commiting'
 task :aok => [:'rcov:full', :'rcov:open', :'rcov:verify',
-              :'yard:html', :'yard:open',
+              :'yard:html', :'yard:open', :'yard:ycov',
               :'ditz:stage', :'ditz:html', :'ditz:todo', :'ditz:status', :'ditz:html:open']
 
 # desc 'Task run during continuous integration'
