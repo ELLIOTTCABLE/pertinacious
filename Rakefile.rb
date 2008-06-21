@@ -4,7 +4,7 @@ require 'pertinacious'
 require 'rubygems'
 
 require 'rake'
-require 'rake/rdoctask'
+require 'yard'
 require 'spec/rake/spectask'
 require 'spec/rake/verify_rcov'
 
@@ -38,11 +38,10 @@ namespace :rcov do
   end
 end
 
-namespace :rdoc do
-  Rake::RDocTask.new :html do |rd|
-     rd.main = "README"
-     rd.rdoc_dir = :meta / :documentation
-     rd.rdoc_files.include("lib/**/*.rb")
+namespace :yard do
+  YARD::Rake::YardocTask.new :html do |t|
+    t.files   = ['lib/**/*.rb']
+    t.options = ['--readme', 'README.mkdn', '--output-dir', 'meta/documentation']
   end
   
   task :open do
@@ -83,11 +82,11 @@ end
 
 desc 'Check everything over before commiting'
 task :aok => [:'rcov:full', :'rcov:open', :'rcov:verify',
-              :'rdoc:html', :'rdoc:open',
+              :'yard:html', :'yard:open',
               :'ditz:stage', :'ditz:html', :'ditz:todo', :'ditz:status', :'ditz:html:open']
 
 # desc 'Task run during continuous integration'
-task :cruise => [:'rcov:plain', :'ditz:html', :'rcov:verify', :'rdoc:html']
+task :cruise => [:'rcov:plain', :'ditz:html', :'yard:html', :'rcov:verify']
 
 # By default, we just list the tasks.
 task :default => :list

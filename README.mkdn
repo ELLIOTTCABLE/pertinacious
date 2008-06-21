@@ -1,3 +1,5 @@
+#!markdown
+
 Pertinacious
 ============
 
@@ -73,3 +75,4 @@ To develop and contribute to Pertinacious, you also need:
 * rake
 * rcov
 * ditz
+* yard
