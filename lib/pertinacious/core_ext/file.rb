@@ -17,3 +17,5 @@ class File
     end
   end
 end
+
+# Specs are in string.rb and symbol.rb
