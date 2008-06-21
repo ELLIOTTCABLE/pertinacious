@@ -1,4 +1,4 @@
-class Spec
+module Spec
   
   module ::Kernel
     def Spec object, caller = nil, &block
