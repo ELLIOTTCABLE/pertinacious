@@ -1,10 +1,8 @@
 module Pertinacious
-  
   # This is the basic model for a Pertinacious Attribute; that is, one of
   # these is created when you utilize the +attribute+ method in a pertinacious
   # class.  
   module Attribute
-    
     # Creates a new +attribute+ and accessors for that attribute on on
     # +target+, 
     def self.new attribute, target, opts = {}, &block
@@ -50,24 +48,22 @@ module Pertinacious
       end
       
     end
-    
-    # This is included, by Pertinacious, into pertinacious classes. Thus, 
-    # +attribute+ is available to all pertinacious classes. It takes a series of
-    # symbols as names of attributes, as well as an optional block the define
-    # the default value of the attributes.
-    module Includes
-      # def attribute *attributes, opts, &block # Some day, ruby 1.9, some day...
-      def attribute *attributes, &block
-        opts = attributes.pop if attributes.last.is_a?(Hash)
-        
-        attributes.each do |attribute|
-          ::Pertinacious::Attribute.new attribute, self, opts, &block
-        end
-      end
-    end
-    
   end
   
+  # This is included, by Pertinacious, into pertinacious classes. Thus, 
+  # +attribute+ is available to all pertinacious classes. It takes a series of
+  # symbols as names of attributes, as well as an optional block the define
+  # the default value of the attributes.
+  module Core
+    # def attribute *attributes, opts, &block # Some day, ruby 1.9, some day...
+    def attribute *attributes, &block
+      opts = attributes.pop if attributes.last.is_a?(Hash)
+      
+      attributes.each do |attribute|
+        ::Pertinacious::Attribute.new attribute, self, opts, &block
+      end
+    end
+  end
 end
 
 # -- --- Specs --- -- #
@@ -157,12 +153,12 @@ describe Pertinacious::Attribute do
     
   end
   
-  describe Pertinacious::Attribute::Includes do
+  describe Pertinacious::Core do
     describe '#attribute' do
       before :each do
         @class = Class.new
         @class.class_eval do
-          extend Pertinacious::Attribute::Includes
+          extend Pertinacious::Core
           attribute :color, :age
         end
         @instance = @class.new

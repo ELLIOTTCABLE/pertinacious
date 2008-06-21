@@ -12,8 +12,5 @@ module Pertinacious
   
   module Core
     
-    def self.included klass
-      klass.send :extend, Pertinacious::Attribute::Includes
-    end
   end
 end
