@@ -1,7 +1,9 @@
 require 'pertinacious/core_ext'
+
+require 'pertinacious/attribute'
+
 require 'pertinacious/core'
 require 'pertinacious/base'
-require 'pertinacious/attribute'
 
 # Welcome to Pertinacious!
 module Pertinacious

@@ -1,5 +1,5 @@
 $LOAD_PATH.unshift(File.expand_path( File.join(File.dirname(__FILE__), 'lib') )).uniq!
-require 'pertinacious/core_ext'
+require 'pertinacious'
 
 require 'rubygems'
 
@@ -10,19 +10,19 @@ require 'spec/rake/verify_rcov'
 
 # Runs specs, generates rcov, and opens rcov in your browser.
 namespace :rcov do
-  Spec::Rake::SpecTask.new(:run) do |t|
+  Spec::Rake::SpecTask.new(:full) do |t|
     t.spec_opts = ["--format", "specdoc", "--colour"]
-    t.spec_files = Dir['spec/**/*_spec.rb'].sort
-    t.libs = ['lib', 'server/lib' ]
+    t.spec_files = Dir['lib/pertinacious.rb'].sort
+    t.libs = ['lib']
     t.rcov = true
     t.rcov_opts = ['--exclude-only', '".*"', '--include-file', '^lib']
     t.rcov_dir = :meta / :coverage
   end
   
   Spec::Rake::SpecTask.new(:plain) do |t|
-    t.spec_opts = ["--format", "specdoc"]
-    t.spec_files = Dir['spec/**/*_spec.rb'].sort
-    t.libs = ['lib', 'server/lib' ]
+    t.spec_opts = []
+    t.spec_files = Dir['lib/pertinacious.rb'].sort
+    t.libs = ['lib']
     t.rcov = true
     t.rcov_opts = ['--exclude-only', '".*"', '--include-file', '^lib']
     t.rcov_dir = :meta / :coverage
@@ -81,7 +81,7 @@ namespace :ditz do
 end
 
 desc 'Check everything over before commiting'
-task :aok => [:'rcov:run', :'rcov:verify', :'rcov:open',
+task :aok => [:'rcov:full', :'rcov:open', :'rcov:verify',
               :'rdoc:html', :'rdoc:open',
               :'ditz:stage', :'ditz:html', :'ditz:todo', :'ditz:status', :'ditz:html:open']
 
