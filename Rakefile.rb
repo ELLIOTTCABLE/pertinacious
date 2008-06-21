@@ -29,7 +29,7 @@ namespace :rcov do
   end
   
   RCov::VerifyTask.new(:verify) do |t|
-    t.threshold = 100
+    t.threshold = 96.8
     t.index_html = :meta / :coverage / 'index.html'
   end
 
@@ -44,6 +44,7 @@ namespace :rdoc do
      rd.rdoc_dir = :meta / :documentation
      rd.rdoc_files.include("lib/**/*.rb")
   end
+  
   task :open do
     system 'open ' + :meta / :documentation / 'index.html' if PLATFORM['darwin']
   end
