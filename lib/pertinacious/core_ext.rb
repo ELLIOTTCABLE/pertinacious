@@ -1,3 +1,4 @@
+require 'pertinacious/core_ext/spec'
 require 'pertinacious/core_ext/kernel'
 require 'pertinacious/core_ext/object'
 require 'pertinacious/core_ext/string'
