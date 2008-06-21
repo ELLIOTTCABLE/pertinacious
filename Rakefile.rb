@@ -44,7 +44,7 @@ end
 namespace :yard do
   YARD::Rake::YardocTask.new :html do |t|
     t.files   = ['lib/**/*.rb']
-    t.options = ['--readme', 'README.mkdn', '--output-dir', 'meta/documentation']
+    t.options = ['--readme', 'README.markdown', '--output-dir', 'meta/documentation']
   end
   
   task :ycov do
